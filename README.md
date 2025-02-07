@@ -1,2 +1,2 @@
-# TallerMecanico
-Sistema de gestión integral de un taller mecánico, basado en Django, PostgreSQL
+# Documentacion
+Esta rama esta destinada para la documentación relacionada al proyecto
