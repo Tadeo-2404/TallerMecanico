@@ -1,0 +1,102 @@
+-- Configuración inicial
+SET client_encoding TO 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages TO warning;
+
+-- Crear base de datos
+CREATE DATABASE dbtaller_mecanico;
+
+-- Conectar a la base de datos
+\c dbtaller_mecanico
+
+-- Extensión para cifrado de contraseñas
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- Tabla: usuarios
+CREATE TABLE usuarios (
+    id_usuario INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    correo_electronico VARCHAR(255) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    rol VARCHAR(10) NOT NULL
+);
+
+-- Tabla: clientes
+CREATE TABLE clientes (
+    id_cliente INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    nombre_cliente VARCHAR(100) NOT NULL,
+    telefono VARCHAR(10) NOT NULL CHECK (telefono ~ '^[0-9]+$'),
+    CONSTRAINT fk_clientes_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
+);
+
+-- Tabla: vehiculos
+CREATE TABLE vehiculos (
+    matricula VARCHAR(20) PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    marca VARCHAR(20) NOT NULL,
+    modelo VARCHAR(20) NOT NULL,
+    CONSTRAINT fk_vehiculos_cliente FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+);
+
+-- Tabla: citas
+CREATE TABLE citas (
+    id_cita INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_cliente INT NOT NULL,
+    fecha_cita TIMESTAMP NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_citas_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+    CONSTRAINT fk_citas_cliente FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
+);
+
+-- Tabla: piezas
+CREATE TABLE piezas (
+    id_pieza INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    descripcion VARCHAR(255) NOT NULL,
+    cantidad INT NOT NULL CHECK (cantidad >= 0),
+    categoria VARCHAR(50),
+    stock_actual INT NOT NULL CHECK (stock_actual >= 0)
+);
+
+-- Tabla: reparaciones
+CREATE TABLE reparaciones (
+    folio INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    matricula VARCHAR(20) NOT NULL,
+    id_pieza INT NOT NULL,
+    fecha_entrada DATE NOT NULL,
+    fecha_salida DATE,
+    falla VARCHAR(255) NOT NULL,
+    precio NUMERIC(10, 2) CHECK (precio >= 0),
+    CONSTRAINT fk_reparaciones_vehiculo FOREIGN KEY (matricula) REFERENCES vehiculos (matricula),
+    CONSTRAINT fk_reparaciones_pieza FOREIGN KEY (id_pieza) REFERENCES piezas (id_pieza)
+);
+
+-- Insertar datos iniciales con contraseña cifrada
+INSERT INTO usuarios (correo_electronico, contrasena, nombre, rol) VALUES
+  ('joel@gmail.com', crypt('123', gen_salt('bf')), 'joel', 'admin');
+
+-- Crear índices
+CREATE INDEX idx_clientes_usuario ON clientes (id_usuario);
+CREATE INDEX idx_vehiculos_cliente ON vehiculos (id_cliente);
+CREATE INDEX idx_citas_usuario ON citas (id_usuario);
+CREATE INDEX idx_citas_cliente ON citas (id_cliente);
+CREATE INDEX idx_reparaciones_vehiculo ON reparaciones (matricula);
+CREATE INDEX idx_reparaciones_pieza ON reparaciones (id_pieza);
+
+-- Configuración de seguridad
+-- Crear rol admin si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'admin') THEN
+        CREATE ROLE admin WITH LOGIN PASSWORD 'secure_password';
+    END IF;
+END
+$$;
+
+-- Configurar permisos
+REVOKE ALL ON DATABASE dbtaller_mecanico FROM PUBLIC;
+GRANT CONNECT ON DATABASE dbtaller_mecanico TO admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO admin;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO admin;

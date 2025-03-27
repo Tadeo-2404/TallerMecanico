@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Gestión de Órdenes de Servicio</h2>
+    <p class="text-center">Administra las órdenes de servicio del taller mecánico.</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Versión 1</h5>
+                    <p class="card-text">Registra y administra reparaciones. Incluye datos del vehículo, mecánico asignado y costos estimados.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Versión 2</h5>
+                    <p class="card-text">Permite asignar mecánicos, definir tiempos estimados y calcular automáticamente costos. Se pueden actualizar los estados de las órdenes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Versión 3</h5>
+                    <p class="card-text">Registro detallado con datos del cliente y vehículo. Notificaciones automáticas, reportes detallados y actualización en tiempo real.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
