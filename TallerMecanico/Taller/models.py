@@ -21,6 +21,8 @@ class Cliente(models.Model):
     nombre_cliente = models.CharField(max_length=100)
     telefono = models.CharField(max_length=10)
     registrado_por = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.nombre_cliente  # Devuelve la descripción del cliente
 
 # Modelo de vehículos
 class Vehiculo(models.Model):
@@ -28,6 +30,8 @@ class Vehiculo(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     marca = models.CharField(max_length=20)
     modelo = models.CharField(max_length=20)
+    def __str__(self):
+        return f"{self.matricula} - {self.marca} {self.modelo}"
 
 # Modelo de citas
 class Cita(models.Model):
@@ -42,6 +46,9 @@ class Pieza(models.Model):
     cantidad = models.IntegerField()
     categoria = models.CharField(max_length=50, null=True, blank=True)
     stock_actual = models.IntegerField()
+    
+    def __str__(self):
+        return self.descripcion  # Devuelve la descripción de la pieza
 
 # Modelo de reparaciones
 class Reparacion(models.Model):
@@ -51,3 +58,9 @@ class Reparacion(models.Model):
     fecha_salida = models.DateField(null=True, blank=True)
     falla = models.CharField(max_length=255)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
+    ESTADO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('en_proceso', 'En proceso'),
+        ('finalizado', 'Finalizado'),
+    ]
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')

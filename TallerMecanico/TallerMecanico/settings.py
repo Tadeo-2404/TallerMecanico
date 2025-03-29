@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,35 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Taller',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Taller Mecánico Admin",
+    "site_header": "Panel de Administración",
+    "site_brand": "Taller Mecánico",
+    "site_logo": "img/carro.gif",  # Cambia por la ruta real de tu logo
+    "welcome_sign": "Bienvenido al panel de administración del taller",
+    "copyright": "© 2025 Taller Mecánico",
+    
+    # 🎨 Personalización de colores
+    "primary_color": "#bd5d38",  # Marrón anaranjado
+    "secondary_color": "#2C2F33",  # Gris oscuro para el fondo del menú
+    "dark_mode_toggle": True,  # Habilita modo oscuro
+
+    # 🎨 Configuración de la barra lateral (menú)
+    "navigation_expanded": True,
+    "show_ui_builder": False,
+    "custom_css": "static/css/styles.css",  # Puedes agregar más estilos
+
+    # 🎨 Iconos para los modelos en el panel
+    "icons": {
+        "auth.user": "fas fa-user",
+        "auth.group": "fas fa-users",
+        "app.Vehiculo": "fas fa-car",
+        "app.Reparacion": "fas fa-tools",
+        "app.Servicio": "fas fa-cogs",
+    },
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,6 +154,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Taller/static'),  # Ruta de los archivos estáticos
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Carpeta donde se almacenarán los archivos estáticos
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

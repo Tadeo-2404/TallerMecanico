@@ -20,4 +20,6 @@ from . import views
 urlpatterns = [
     path('', views.index, name='inicio'),  # Define la ruta principal de la app
     path('ordenes-servicio/', views.ordenes_servicio, name='ordenes_servicio'),  # Nueva vista
+    path('generar_reporte/<str:matricula>/', views.generar_reporte, name='generar_reporte'),
+
 ]

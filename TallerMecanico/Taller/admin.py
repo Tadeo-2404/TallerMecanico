@@ -33,9 +33,13 @@ class PiezaAdmin(admin.ModelAdmin):
 
 # Configuración del administrador para el modelo Reparacion
 class ReparacionAdmin(admin.ModelAdmin):
-    list_display = ("vehiculo", "pieza", "fecha_entrada", "fecha_salida", "falla", "precio")
-    search_fields = ("vehiculo__matricula", "pieza__descripcion", "falla")
-    list_filter = ("fecha_entrada", "fecha_salida")
+    list_display = ("vehiculo", "pieza", "fecha_entrada", "fecha_salida", "falla", "precio","estado")
+    search_fields = ("vehiculo__matricula", "pieza__descripcion", "falla","estado")
+    list_filter = ("fecha_entrada", "fecha_salida", "estado")
+    def get_vehiculo(self, obj):
+        return obj.vehiculo.matricula  # Devuelve la matrícula en lugar de "Vehiculo object (1)"
+    
+    get_vehiculo.short_description = "Vehículo"  # Nombre de la columna en la tabla
 
 # Registrar los modelos en el panel de administración
 admin.site.register(Usuario, UsuarioAdmin)

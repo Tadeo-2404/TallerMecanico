@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Reporte de Reparación">
+    <meta name="author" content="Taller Mecánico">
+    <title>Reporte de Reparación</title>
+</head>
+<body>
+    <h1>Reporte de Reparación</h1>
+
+    <p><strong>Vehículo:</strong> {{ reparacion.vehiculo.modelo }} ({{ reparacion.vehiculo.matricula }})</p>
+    <p><strong>Pieza:</strong> {{ reparacion.pieza.nombre }}</p>
+    <p><strong>Fecha de Entrada:</strong> {{ reparacion.fecha_entrada }}</p>
+    <p><strong>Fecha de Salida:</strong> {{ reparacion.fecha_salida }}</p>
+    <p><strong>Falla:</strong> {{ reparacion.falla }}</p>
+    <p><strong>Precio:</strong> {{ reparacion.precio }} USD</p>
+    <p><strong>Estado:</strong> {{ reparacion.estado }}</p>
+
+    <!-- Generar QR Code -->
+    <h2>QR para Cita</h2>
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" />
+
+</body>
+</html>
