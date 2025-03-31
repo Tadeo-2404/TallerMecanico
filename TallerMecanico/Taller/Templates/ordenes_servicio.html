@@ -27,10 +27,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Sobre Nosotros</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Servicios</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contacto</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#vehicles">Vehículos</a></li>
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item">
+                        <a class="nav-link custom-link" href="{% url 'inicio' %}#about">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-link" href="{% url 'inicio' %}#services">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-link" href="{% url 'inicio' %}#contact">Contacto</a>
+                    </li>
+                    <li class="nav-item">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reparaciones">Reparaciones</a></li>
             </ul>
         </div>
@@ -56,9 +63,6 @@
                     <p><strong>Placa:</strong> {{ vehiculo.matricula }}</p>
                     <p><strong>Marca:</strong> {{ vehiculo.marca }}</p>
                     
-                    <!-- Generación del código QR -->
-                    <h4>Código QR del Vehículo:</h4>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ vehiculo.matricula }}&size=150x150" alt="QR del vehículo">
                     
                     <p><strong>Estado:</strong> 
                         {% if vehiculo.reparacion_set.exists %}
@@ -77,7 +81,66 @@
                             No hay reparaciones registradas
                         {% endif %}
                     </p>
-                    <a href="{% url 'generar_reporte' vehiculo.matricula %}">Generar Reporte</a>
+                    <style>
+                        .button-container {
+                            display: flex;
+                            gap: 15px; /* Espaciado entre los botones */
+                            flex-wrap: wrap; /* Permite que se acomoden en pantallas pequeñas */
+                        }
+                    
+                        .btn-reporte, .btn-envio {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            padding: 12px 18px;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            color: white;
+                            border: none;
+                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                            transition: background 0.3s ease, transform 0.2s;
+                        }
+                    
+                        .btn-reporte {
+                            background-color: #bd5d38;
+                        }
+                    
+                        .btn-reporte:hover {
+                            background-color: #a14c2e;
+                            transform: scale(1.05);
+                        }
+                    
+                        .btn-envio {
+                            background-color: #ff7f50;
+                        }
+                    
+                        .btn-envio:hover {
+                            background-color: #e76f41;
+                            transform: scale(1.05);
+                        }
+                    
+                        .btn-reporte:active, .btn-envio:active {
+                            transform: scale(0.98);
+                        }
+                    </style>
+                    
+                    <div class="button-container">
+                        <a href="{% url 'generar_reporte' vehiculo.matricula %}" class="btn-reporte">
+                            📄 Generar Reporte
+                        </a>
+                    
+                        <form action="{% url 'enviar_reporte_email' vehiculo.matricula %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-envio">
+                                ✉️ Enviar Reporte por Correo
+                            </button>
+                        </form>
+                    </div>
+                    
+                    
 
                     <!-- Agrega más detalles según sea necesario -->
                 </div>

@@ -21,6 +21,7 @@ class Cliente(models.Model):
     nombre_cliente = models.CharField(max_length=100)
     telefono = models.CharField(max_length=10)
     registrado_por = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    correo_electronico = models.CharField(max_length=255, null=True, blank=True)
     def __str__(self):
         return self.nombre_cliente  # Devuelve la descripción del cliente
 

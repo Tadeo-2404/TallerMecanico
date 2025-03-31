@@ -160,3 +160,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Carpeta donde se almacena
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "soffycafri04@gmail.com"
+EMAIL_HOST_PASSWORD = "afgu poui dvxf oybr"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

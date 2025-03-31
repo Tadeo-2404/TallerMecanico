@@ -6,21 +6,65 @@
     <meta name="description" content="Reporte de Reparación">
     <meta name="author" content="Taller Mecánico">
     <title>Reporte de Reparación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .reparacion {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        strong {
+            color: #555;
+        }
+        .qr-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .qr-container img {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 5px;
+            background: #fff;
+        }
+    </style>
 </head>
 <body>
     <h1>Reporte de Reparación</h1>
 
-    <p><strong>Vehículo:</strong> {{ reparacion.vehiculo.modelo }} ({{ reparacion.vehiculo.matricula }})</p>
-    <p><strong>Pieza:</strong> {{ reparacion.pieza.nombre }}</p>
-    <p><strong>Fecha de Entrada:</strong> {{ reparacion.fecha_entrada }}</p>
-    <p><strong>Fecha de Salida:</strong> {{ reparacion.fecha_salida }}</p>
-    <p><strong>Falla:</strong> {{ reparacion.falla }}</p>
-    <p><strong>Precio:</strong> {{ reparacion.precio }} USD</p>
-    <p><strong>Estado:</strong> {{ reparacion.estado }}</p>
+    {% for reparacion in reparaciones %}
+    <div class="reparacion">
+        <p><strong>Vehículo:</strong> {{ reparacion.vehiculo.modelo }} ({{ reparacion.vehiculo.matricula }})</p>
+        <p><strong>Fecha de Entrada:</strong> {{ reparacion.fecha_entrada }}</p>
+        <p><strong>Fecha de Salida:</strong> {{ reparacion.fecha_salida }}</p>
+        <p><strong>Falla:</strong> {{ reparacion.falla }}</p>
+        <p><strong>Precio:</strong> ${{ reparacion.precio }} USD</p>
+        <p><strong>Estado:</strong> {{ reparacion.estado }}</p>
+    </div>
+    {% endfor %}
 
-    <!-- Generar QR Code -->
-    <h2>QR para Cita</h2>
-    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" />
+    <!-- Mostrar el código QR si está presente -->
 
 </body>
 </html>

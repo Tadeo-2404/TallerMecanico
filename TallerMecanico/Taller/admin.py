@@ -9,8 +9,8 @@ class UsuarioAdmin(admin.ModelAdmin):
 
 # Configuración del administrador para el modelo Cliente
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ("nombre_cliente", "telefono", "registrado_por")
-    search_fields = ("nombre_cliente", "telefono")
+    list_display = ("nombre_cliente", "telefono", "registrado_por", "correo_electronico")
+    search_fields = ("nombre_cliente", "telefono","correo_electronico")
     list_filter = ("registrado_por",)
 
 # Configuración del administrador para el modelo Vehiculo
