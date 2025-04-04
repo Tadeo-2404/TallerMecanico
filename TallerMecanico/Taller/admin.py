@@ -1,11 +1,6 @@
 from django.contrib import admin
 from .models import Usuario, Cliente, Vehiculo, Cita, Pieza, Reparacion
 
-# Configuración del administrador para el modelo Usuario
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ("username", "rol", "correo_electronico")
-    search_fields = ("username", "rol", "correo_electronico")
-    list_filter = ("rol",)
 
 # Configuración del administrador para el modelo Cliente
 class ClienteAdmin(admin.ModelAdmin):
@@ -42,7 +37,7 @@ class ReparacionAdmin(admin.ModelAdmin):
     get_vehiculo.short_description = "Vehículo"  # Nombre de la columna en la tabla
 
 # Registrar los modelos en el panel de administración
-admin.site.register(Usuario, UsuarioAdmin)
+
 admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Vehiculo, VehiculoAdmin)
 admin.site.register(Cita, CitaAdmin)

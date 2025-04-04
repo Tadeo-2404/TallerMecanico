@@ -181,6 +181,34 @@ def generar_reporte(request, matricula):
     
     return response
 
+def buscar_vehiculo_v0(request):
+    vehiculo = None
+    if request.method == "GET" and "matricula" in request.GET:
+        matricula = request.GET.get("matricula")
+        vehiculo = Vehiculo.objects.filter(matricula=matricula).first()
+    return render(request, 'version0.html', {'vehiculo': vehiculo})
+
+def buscar_vehiculo_v1(request):
+    vehiculo = None
+    if request.method == "GET" and "matricula" in request.GET:
+        matricula = request.GET.get("matricula")
+        vehiculo = Vehiculo.objects.filter(matricula=matricula).first()
+    return render(request, 'version1.html', {'vehiculo': vehiculo})
+
+def buscar_vehiculo_v2(request):
+    vehiculo = None
+    if request.method == "GET" and "matricula" in request.GET:
+        matricula = request.GET.get("matricula")
+        vehiculo = Vehiculo.objects.filter(matricula=matricula).first()
+    return render(request, 'version2.html', {'vehiculo': vehiculo})
+
+def buscar_vehiculo_v3(request):
+    vehiculo = None
+    if request.method == "GET" and "matricula" in request.GET:
+        matricula = request.GET.get("matricula")
+        vehiculo = Vehiculo.objects.filter(matricula=matricula).first()
+    return render(request, 'version3.html', {'vehiculo': vehiculo})
+
 def index(request):
     return render(request, 'index.html')
 

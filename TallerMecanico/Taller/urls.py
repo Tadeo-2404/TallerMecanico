@@ -22,5 +22,9 @@ urlpatterns = [
     path('ordenes-servicio/', views.ordenes_servicio, name='ordenes_servicio'),  # Nueva vista
     path('generar_reporte/<str:matricula>/', views.generar_reporte, name='generar_reporte'), 
     path('enviar-reporte/<str:matricula>/', views.enviar_reporte_email, name='enviar_reporte_email'),
+    path('buscar-vehiculo/v0/', views.buscar_vehiculo_v0, name='buscar_vehiculo_v0'),  # Versión 0
+    path('buscar-vehiculo/v1/', views.buscar_vehiculo_v1, name='buscar_vehiculo_v1'),  # Versión 1
+    path('buscar-vehiculo/v2/', views.buscar_vehiculo_v2, name='buscar_vehiculo_v2'),  # Versión 2
+    path('buscar-vehiculo/v3/', views.buscar_vehiculo_v3, name='buscar_vehiculo_v3'),  # Versión 3
 
 ]
